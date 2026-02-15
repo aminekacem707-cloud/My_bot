@@ -1,20 +1,15 @@
-name: Diamond_Fast_Action
+name: Fast_Diamond_💎
 on:
   workflow_dispatch:
   schedule:
-    - cron: '*/1 * * * *' # التحديث كل دقيقة واحدة (أسرع توقيت ممكن)
+    - cron: '*/1 * * * *' # تشغيل تلقائي كل دقيقة واحدة
 jobs:
-  run_fast:
+  fast_run:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Quick Setup
-        uses: actions/setup-python@v2
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
         with:
           python-version: '3.9'
-          cache: 'pip' # تسريع تثبيت المكتبات عبر التخزين المؤقت
-      - name: Install
-        run: pip install requests beautifulsoup4 pyTelegramBotAPI
-      - name: Run
-        run: python scraper.py
+      - run: pip install requests beautifulsoup4 pyTelegramBotAPI
+      - run: python scraper.py
