@@ -2,14 +2,18 @@ name: Diamond_Action
 on:
   workflow_dispatch:
   schedule:
-    - cron: '*/5 * * * *'
+    - cron: '*/5 * * * *' # تشغيل تلقائي كل 5 دقائق
 jobs:
-  run_scraper:
+  run_job:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-python@v4
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Python Setup
+        uses: actions/setup-python@v2
         with:
           python-version: '3.9'
-      - run: pip install requests beautifulsoup4 pyTelegramBotAPI
-      - run: python scraper.py
+      - name: Install Libs
+        run: pip install requests beautifulsoup4 pyTelegramBotAPI
+      - name: Run Scraper
+        run: python scraper.py
