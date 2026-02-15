@@ -1,15 +1,15 @@
-name: Fast_Action_💎
+name: Root_Diamond_Fast
 on:
   workflow_dispatch:
   schedule:
     - cron: '*/1 * * * *'
 jobs:
-  run:
+  update_data:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2
         with:
           python-version: '3.9'
-      - run: pip install requests beautifulsoup4 pyTelegramBotAPI
+      - run: pip install requests pyTelegramBotAPI
       - run: python scraper.py
