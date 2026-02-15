@@ -1,39 +1,39 @@
 import requests
-from bs4 import BeautifulSoup
 import telebot
 
+# إعدادات البوت الخاصة بك
 TOKEN = "8380499471:AAEjcV3pOVaIuQOOxdL-wCDgOjvFpivzI1s"
 CHAT_ID = "8034521813"
 bot = telebot.TeleBot(TOKEN)
 
-def get_live_data(url):
+def get_live_api_data(game_slug):
     try:
-        # استخدام هوية متصفح قوية لتجنب المنع
-        headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/121.0.0.0'}
-        r = requests.get(url, headers=headers, timeout=15)
-        soup = BeautifulSoup(r.text, 'html.parser')
+        # الاتصال المباشر ببيانات Tracksino الخام
+        url = f"https://api.tracksino.com/v1/games/{game_slug}/results"
+        headers = {'User-Agent': 'Mozilla/5.0'}
+        response = requests.get(url, headers=headers, timeout=10)
+        data = response.json()
         
-        # استهداف "الأرقام الحية" مباشرة من الكلاسات النشطة
-        res = soup.find('div', class_='stats-number')
-        if res: return res.text.strip()
-        
-        # محاولة ثانية في حال تغير الموقع
-        res2 = soup.select_one('.last-results-list .number')
-        return res2.text.strip() if res2 else "قيد الانتظار"
-    except:
+        # استخراج آخر نتيجة ظهرت في المصفوفة
+        if data and 'results' in data and len(data['results']) > 0:
+            return data['results'][0]['result']
+        return "جاري التحديث"
+    except Exception as e:
         return "خطأ اتصال"
 
 def main():
+    # الألعاب المتاحة في استراتيجية Black Diamond
     games = {
-        "Roulette": "https://tracksino.com/lightning-roulette",
-        "Dice": "https://tracksino.com/sicbo",
-        "Monopoly": "https://tracksino.com/monopoly",
-        "CrazyTime": "https://tracksino.com/crazytime"
+        "Roulette": "lightning-roulette",
+        "Dice": "sicbo",
+        "Monopoly": "monopoly",
+        "CrazyTime": "crazytime"
     }
-    for name, url in games.items():
-        val = get_live_data(url)
-        # إرسال البيانات بصيغة البرمجة (الاسم:القيمة)
-        bot.send_message(CHAT_ID, f"{name}:{val}")
+    
+    for name, slug in games.items():
+        result = get_live_api_data(slug)
+        # إرسال النتيجة بالصيغة التي يفهمها المحرك
+        bot.send_message(CHAT_ID, f"{name}:{result}")
 
 if __name__ == "__main__":
     main()
