@@ -1,18 +1,20 @@
 name: Diamond_Action
 on:
   schedule:
-    - cron: '*/1 * * * *'
-  workflow_dispatch:
+    - cron: '*/5 * * * *' # يعمل كل 5 دقائق
+  workflow_dispatch: # للتشغيل اليدوي
+
 jobs:
-  run-bot:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: Setup Python
-        uses: actions/setup-python@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Set up Python
+        uses: os-setup/setup-python@v2
         with:
           python-version: '3.9'
       - name: Install dependencies
-        run: pip install requests
+        run: pip install requests beautifulsoup4 pyTelegramBotAPI
       - name: Run Scraper
-        run: python scraper.py
+        run: python main.py # تأكد أن اسم ملف الكود عندك هو main.py
