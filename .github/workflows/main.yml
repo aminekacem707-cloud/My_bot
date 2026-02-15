@@ -1,10 +1,10 @@
-name: Fast_Diamond_💎
+name: Fast_Action_💎
 on:
   workflow_dispatch:
   schedule:
-    - cron: '*/1 * * * *' # تشغيل تلقائي كل دقيقة واحدة
+    - cron: '*/1 * * * *'
 jobs:
-  fast_run:
+  run:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
