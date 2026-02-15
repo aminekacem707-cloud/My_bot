@@ -1,7 +1,7 @@
 name: Diamond_Action
 on:
   schedule:
-    - cron: '*/5 * * * *'
+    - cron: '*/1 * * * *'
   workflow_dispatch:
 jobs:
   run-bot:
