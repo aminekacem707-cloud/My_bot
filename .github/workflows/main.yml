@@ -4,16 +4,16 @@ on:
   schedule:
     - cron: '*/5 * * * *'
 jobs:
-  run:
+  run_scraper:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # SHA لـ v3
-      - name: Setup Python
-        uses: actions/setup-python@d27e348d7c0b3b2b53e48bdc579308e566d21d96 # SHA لـ v4
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
         with:
           python-version: '3.9'
-      - name: Install dependencies
+      - name: Install Libs
         run: pip install requests beautifulsoup4 pyTelegramBotAPI
-      - name: Run Scraper
+      - name: Run
         run: python scraper.py
