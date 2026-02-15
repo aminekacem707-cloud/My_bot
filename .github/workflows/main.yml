@@ -7,9 +7,13 @@ jobs:
   run:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-python@v4
+      - name: Checkout code
+        uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # SHA لـ v3
+      - name: Setup Python
+        uses: actions/setup-python@d27e348d7c0b3b2b53e48bdc579308e566d21d96 # SHA لـ v4
         with:
           python-version: '3.9'
-      - run: pip install requests beautifulsoup4 pyTelegramBotAPI
-      - run: python scraper.py # تم تعديل الاسم هنا ليطابق ملفك
+      - name: Install dependencies
+        run: pip install requests beautifulsoup4 pyTelegramBotAPI
+      - name: Run Scraper
+        run: python scraper.py
